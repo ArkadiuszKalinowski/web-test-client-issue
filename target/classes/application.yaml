@@ -1,0 +1,8 @@
+server:
+  port: 9000
+management:
+  observations:
+    http:
+      server:
+        requests:
+          name: ALIASED
