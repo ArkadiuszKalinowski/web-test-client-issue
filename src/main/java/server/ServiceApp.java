@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -28,15 +27,6 @@ class SampleController {
     var responseHeaders = response.getHeaders();
     responseHeaders.setContentLength(6);
 
-    if (isRangeRequest(headers)) {
-      responseHeaders.set(HttpHeaders.CONTENT_RANGE, "bytes 0-5/9");
-      response.setStatusCode(HttpStatus.PARTIAL_CONTENT);
-    }
-
     return Flux.just(new DefaultDataBufferFactory().wrap(responseData.getBytes()));
-  }
-
-  private static boolean isRangeRequest(HttpHeaders headers) {
-    return headers.containsKey(HttpHeaders.RANGE);
   }
 }
